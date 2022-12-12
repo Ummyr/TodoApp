@@ -2,6 +2,7 @@
 from flask_restful import abort, Resource, reqparse
 
 from ..db import TodoList as TodoListDB, session
+from ..security import auth
 
 
 def task_doesnt_exist(task_id):
@@ -11,6 +12,7 @@ def task_doesnt_exist(task_id):
 
 class TodoTask(Resource):
     ''' to handle a single task from todo.'''
+    @auth.login_required
     def get(self, task_id):
         ''' returns the task if it exists using id'''
         if task := session.query(TodoListDB).filter(TodoListDB.id==task_id).first():
@@ -18,6 +20,7 @@ class TodoTask(Resource):
         task_doesnt_exist(task_id)
         return None
 
+    @auth.login_required
     def post(self):
         '''adds a task to do'''
         parser = reqparse.RequestParser()
@@ -33,6 +36,7 @@ class TodoTask(Resource):
 
         return {'message':'sucessfully added new entry'}
 
+    @auth.login_required
     def delete(self, task_id):
         ''' deletes a task using id'''
         query = session.query(TodoListDB).filter(TodoListDB.id==task_id)
@@ -43,6 +47,7 @@ class TodoTask(Resource):
         session.commit()
         return {'message':'sucessfully deleted'}
 
+    @auth.login_required
     def put(self, task_id):
         ''' updates the task using id'''
         parser = reqparse.RequestParser()
@@ -68,6 +73,7 @@ class TodoTask(Resource):
 class TodoList(Resource):
     ''' paginate a list of tasks in the todo '''
 
+    @auth.login_required
     def get(self, page=0):
         ''' returns list of task to display on a page '''
 

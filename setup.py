@@ -23,7 +23,8 @@ setuptools.setup(
     install_requires=[
         "Flask==2.2.2",
         "Flask-RESTful==0.3.9",
-        "SQLAlchemy==1.4.45"
+        "SQLAlchemy==1.4.45",
+        "flask-httpauth-4.7.0"
     ],
     extras_require={
         'dev': [
