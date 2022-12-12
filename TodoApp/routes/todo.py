@@ -16,7 +16,7 @@ class TodoTask(Resource):
     def get(self, task_id):
         ''' returns the task if it exists using id'''
         if task := session.query(TodoListDB).filter(TodoListDB.id==task_id).first():
-            return task.to_dict()
+            return task.to_dict_encrypted()
         task_doesnt_exist(task_id)
         return None
 
@@ -67,7 +67,7 @@ class TodoTask(Resource):
 
         session.commit()
         task = session.query(TodoListDB).filter(TodoListDB.id==task_id).first()
-        return {'message':'sucessfully updated', 'data':task.to_dict()}
+        return {'message':'sucessfully updated', 'data':task.to_dict_encrypted()}
 
 
 class TodoList(Resource):
@@ -87,4 +87,4 @@ class TodoList(Resource):
             count = args['count']
 
         query = session.query(TodoListDB).limit(count).offset(page*count)
-        return [t.to_dict() for t in query]
+        return [t.to_dict_encrypted() for t in query]

@@ -3,6 +3,7 @@ from sqlalchemy import Column
 from sqlalchemy import Integer
 from sqlalchemy import String, Boolean
 from . import Base as BaseDB
+from ..security import encrypt_data
 
 
 class TodoList(BaseDB):
@@ -22,4 +23,12 @@ class TodoList(BaseDB):
             'id': self.id,
             'task': self.task,
             'done': self.done
+        }
+
+    def to_dict_encrypted(self):
+        ''' converts row into dict who's values are encrypted '''
+        return {
+            'id': encrypt_data(self.id),
+            'task': encrypt_data(self.task),
+            'done': encrypt_data(self.done)
         }
