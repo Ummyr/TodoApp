@@ -18,7 +18,7 @@ setuptools.setup(
     description="TO-DO flask app",
     long_description="",
     long_description_content_type='text/markdown',
-    url='',
+    url='https://github.com/Ummyr/TodoApp.git',
     packages=setuptools.find_packages(),
     install_requires=[
         "Flask==2.2.2",
