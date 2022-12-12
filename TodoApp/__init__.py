@@ -8,4 +8,5 @@ from . import db, routes
 app = Flask(__name__)
 api = Api(app)
 api.add_resource(routes.TodoTask, '/task/<int:task_id>', '/task')
-api.add_resource(routes.TodoList, '/list/<int:page>', '/list')
+api.add_resource(routes.TodoList, '/list/<int:todo_list_id>/<int:page>',
+	'/list/<int:todo_list_id>', '/list')
