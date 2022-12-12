@@ -1,6 +1,7 @@
 ''' sqlalchemy ORM module. '''
 from sqlalchemy.orm import declarative_base
 from sqlalchemy import create_engine
+from sqlalchemy.orm import Session
 
 
 engine = create_engine("sqlite:///TodoApp.sqlite", echo=True, future=True)
@@ -10,3 +11,4 @@ Base = declarative_base()
 from .todo import TodoList
 
 Base.metadata.create_all(engine)
+session = Session(engine)
