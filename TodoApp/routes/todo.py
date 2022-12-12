@@ -20,13 +20,13 @@ class TodoTask(Resource):
     def get(self, task_id):
         ''' returns the task if it exists using id'''
         if task := session.query(TaskDB).filter(TaskDB.id==task_id).first():
-            return task.to_dict()
+            return task.to_dict_encrypted()
         task_doesnt_exist(task_id)
         return None
 
     @auth.login_required
     def post(self):
-        '''adds a task to do'''
+        '''adds a task to do using list's id'''
         parser = reqparse.RequestParser()
         parser.add_argument("task", required=True)
         parser.add_argument("todo_id", type=int, required=True)
@@ -74,11 +74,11 @@ class TodoTask(Resource):
 
         session.commit()
         task = session.query(TaskDB).filter(TaskDB.id==task_id).first()
-        return {'message':'sucessfully updated', 'data':task.to_dict()}
+        return {'message':'sucessfully updated', 'data':task.to_dict_encrypted()}
 
 
 class TodoList(Resource):
-    ''' paginate a list of tasks in the todo '''
+    ''' to handle todo list tasks '''
 
     @auth.login_required
     def get(self, todo_list_id, page=0):
@@ -95,7 +95,7 @@ class TodoList(Resource):
 
         query = (session.query(TaskDB).join(TodoListDB).filter(TodoListDB.id == todo_list_id)
             .limit(count).offset(page*count))
-        return [t.to_dict() for t in query]
+        return [t.to_dict_encrypted() for t in query]
 
     @auth.login_required
     def post(self):

@@ -3,6 +3,7 @@ from sqlalchemy import Column
 from sqlalchemy import Integer, ForeignKey
 from sqlalchemy import String, Boolean
 from sqlalchemy.orm import relationship
+
 from . import Base as BaseDB
 from ..security import encrypt_data
 
@@ -20,6 +21,7 @@ class TodoList(BaseDB):
 
     def __repr__(self):
         return f"TodoList(id={self.id!r}, title={self.title!r})"
+
 
 class Task(BaseDB):
     ''' creating todo tasks db '''
