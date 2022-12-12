@@ -15,3 +15,11 @@ class TodoList(BaseDB):
 
     def __repr__(self):
         return f"TodoList(id={self.id!r}, task={self.task!r}, done={self.done!r})"
+
+    def to_dict(self):
+        ''' converts row into dict that can be used for conversion into json '''
+        return {
+            'id': self.id,
+            'task': self.task,
+            'done': self.done
+        }
